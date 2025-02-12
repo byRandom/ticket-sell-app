@@ -1,36 +1,48 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Ticket Sell App
 
-## Getting Started
+![Estado](https://img.shields.io/badge/estado-en%20desarrollo-yellow)
+![Next.js](https://img.shields.io/badge/Next.js-000000?logo=next.js&logoColor=white)
+![React](https://img.shields.io/badge/React-20232A?logo=react&logoColor=61DAFB)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?logo=tailwind-css&logoColor=white)
+![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?logo=typescript&logoColor=white)
 
-First, run the development server:
+## Descripción
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+Ticket Sell App es una aplicación web que actualmente está en desarrollo. Su objetivo es proporcionar una plataforma para la venta de entradas para eventos.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Tecnologías Utilizadas
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- **Next.js**: Framework de React para la creación de aplicaciones web.
+- **React**: Biblioteca de JavaScript para construir interfaces de usuario.
+- **Tailwind CSS**: Framework de CSS para un diseño rápido y eficiente.
+- **TypeScript**: Un superset de JavaScript que añade tipos estáticos.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Instalación
 
-## Learn More
+Para instalar y ejecutar la aplicación localmente, sigue estos pasos:
 
-To learn more about Next.js, take a look at the following resources:
+1. Clona el repositorio:
+    ```sh
+    git clone https://github.com/tu-usuario/ticket-sell-app.git
+    ```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+2. Navega al directorio del proyecto:
+    ```sh
+    cd ticket-sell-app
+    ```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+3. Instala las dependencias:
+    ```sh
+    pnpm install
+    ```
 
-## Deploy on Vercel
+4. Ejecuta la aplicación en modo de desarrollo:
+    ```sh
+    pnpm dev
+    ```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+5. Abre [http://localhost:3000](http://localhost:3000) en tu navegador para ver la aplicación.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Licencia
+
+Este proyecto está bajo la licencia MIT. Consulta el archivo LICENSE para más detalles.
