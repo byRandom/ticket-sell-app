@@ -17,3 +17,16 @@ export interface Login{
     email: string,
     password: string
 }
+export interface interfaceToken{
+    id: number,
+    email: string,
+    username: string,
+    expiresIn: number
+}
+
+export interface eventObject{
+    name: string,
+    date: string,
+    location: string,
+    description: string
+}

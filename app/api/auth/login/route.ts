@@ -1,5 +1,5 @@
 import { getUserData } from "@/app/lib/db";
-import { Login } from "@/app/lib/definitions";
+import { interfaceToken, Login } from "@/app/lib/definitions";
 import bcrypt from "bcryptjs";
 import { cookies } from "next/headers";
 import * as jwt from "jsonwebtoken";
@@ -37,18 +37,26 @@ export async function POST(req:Request){
 
     //Set the cookie
     const cookieStore = await cookies();
-    const tokenJSON = {
+    const tokenJSON:interfaceToken = {
         id: user[0].id,
         email: user[0].email,
         username: user[0].username,
         expiresIn: Date.now() + 1000 * 60 * 60 * 24 * 7
     }
+    console.log(tokenJSON);
     const secret:string = process.env.JWT_SECRET ? process.env.JWT_SECRET : '';
+    //Create the token and check if its in dev to set the secure flag
     const token = jwt.sign(tokenJSON, secret, {expiresIn: "7d"});
+    console.log(token);
     const tokenString = JSON.stringify(token);
-
-
-    cookieStore.set("Token", tokenString, {httpOnly:true, sameSite:"strict"})
+    cookieStore.set("Token", tokenString, 
+    {
+        httpOnly:true,
+        sameSite:"strict",
+        secure: process.env.NODE_ENV === "production",
+        path:"/",
+        maxAge:60 * 60 * 24 * 7,
+    });
 
 
     //Return a success message
