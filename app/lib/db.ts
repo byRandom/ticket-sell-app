@@ -40,7 +40,7 @@ export async function addEvent(event: eventObject){
     let url = process.env.DATABASE_URL;
     const sql = url ? neon(url) : neon('');
     const response = await sql`INSERT INTO events (name, date, location, description) VALUES (${event.name}, ${event.date}, ${event.location}, ${event.description});`;
-    return response;
+    return event;
 }
 
 export async function getEvents(){
