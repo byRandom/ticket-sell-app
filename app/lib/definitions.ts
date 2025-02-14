@@ -1,10 +1,6 @@
-export interface Credentials{
-    email: string,
-    user: string,
-    password: string,
-    receive_promotions: boolean
-}
+// Definition of the types used in the application
 
+// User interface
 export interface User{
     id: number,
     email: string,
@@ -13,10 +9,12 @@ export interface User{
     receive_promotions: boolean
 }
 
-export interface Login{
-    email: string,
-    password: string
-}
+// Types from the user interface
+export type Credentials = Pick<User,  'email' | 'username' | 'password' | 'receive_promotions'>
+
+export type Login = Pick<User, 'email' | 'password'>
+
+// Token interface
 export interface interfaceToken{
     id: number,
     email: string,
@@ -24,6 +22,7 @@ export interface interfaceToken{
     expiresIn: number
 }
 
+// Event interface
 export interface eventObject{
     name: string,
     date: string,

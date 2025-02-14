@@ -11,7 +11,7 @@ export async function getData() {
 export async function createUser(credentials:Credentials){
     let url = process.env.DATABASE_URL;
     const sql = url ? neon(url) : neon('');
-    const data = await sql`INSERT INTO users (email, username, password, receive_promotions) VALUES (${credentials.email}, ${credentials.user}, ${credentials.password}, ${credentials.receive_promotions})`;
+    const data = await sql`INSERT INTO users (email, username, password, receive_promotions) VALUES (${credentials.email}, ${credentials.username}, ${credentials.password}, ${credentials.receive_promotions})`;
     return data;
 }
 //function to check if the user exists
