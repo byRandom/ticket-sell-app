@@ -36,6 +36,7 @@ export async function checkAdmin(id: number){
     return data[0].admin;
 }
 
+//function to add an event
 export async function addEvent(event: eventObject){
     let url = process.env.DATABASE_URL;
     const sql = url ? neon(url) : neon('');
@@ -43,6 +44,7 @@ export async function addEvent(event: eventObject){
     return event;
 }
 
+//function to get the events
 export async function getEvents(){
     let url = process.env.DATABASE_URL;
     const sql = url ? neon(url) : neon('');

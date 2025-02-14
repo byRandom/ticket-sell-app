@@ -10,10 +10,13 @@ export async function POST(req: Request) {
         return Response.json({message: "Email already exists"}, {status: 400});
     };
     try {
+        //Hash the password
         data.password = await bcrypt.hash(data.password, 10);
         await createUser(data);
     } catch (e) {
         return Response.json({message: "Error creating user"}, {status: 500});
     }
+
+    //Return success message
     return Response.json({ message:"User created successfully" }, { status: 200 });
 }

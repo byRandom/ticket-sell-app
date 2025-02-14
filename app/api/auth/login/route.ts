@@ -43,12 +43,11 @@ export async function POST(req:Request){
         username: user[0].username,
         expiresIn: Date.now() + 1000 * 60 * 60 * 24 * 7
     }
-    console.log(tokenJSON);
     const secret:string = process.env.JWT_SECRET ? process.env.JWT_SECRET : '';
     //Create the token and check if its in dev to set the secure flag
     const token = jwt.sign(tokenJSON, secret, {expiresIn: "7d"});
-    console.log(token);
     const tokenString = JSON.stringify(token);
+    //Set the cookie
     cookieStore.set("Token", tokenString, 
     {
         httpOnly:true,
