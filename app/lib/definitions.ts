@@ -27,5 +27,17 @@ export interface eventObject{
     name: string,
     date: string,
     location: string,
-    description: string
+    description: string,
+    max_tickets: number,
+    price: number,
+    image: string,
+    category: string,
+    tickets_sold: number
+}
+
+export interface ticketObject{
+    event_id: number,
+    user_id: number,
+    uuid: string,
+    enabled: boolean
 }

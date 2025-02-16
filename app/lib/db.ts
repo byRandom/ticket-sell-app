@@ -1,6 +1,6 @@
 import { neon } from "@neondatabase/serverless";
 import process from "process";
-import { Credentials, eventObject, Login } from "./definitions";
+import { Credentials, eventObject, ticketObject } from "./definitions";
 export async function getData() {
     let url = process.env.DATABASE_URL;
     const sql = url ? neon(url) : neon('');
@@ -40,7 +40,7 @@ export async function checkAdmin(id: number){
 export async function addEvent(event: eventObject){
     let url = process.env.DATABASE_URL;
     const sql = url ? neon(url) : neon('');
-    const response = await sql`INSERT INTO events (name, date, location, description) VALUES (${event.name}, ${event.date}, ${event.location}, ${event.description});`;
+    const response = await sql`INSERT INTO events (name, date, location, description, category, max_tickets, price, image, tickets_sold) VALUES (${event.name}, ${event.date}, ${event.location}, ${event.description}, ${event.category},${event.max_tickets}, ${event.price}, ${event.image}, ${event.tickets_sold} );`;
     return event;
 }
 
@@ -50,4 +50,55 @@ export async function getEvents(){
     const sql = url ? neon(url) : neon('');
     const data = await sql`SELECT * FROM events;`;
     return data;
+}
+
+//function to create a ticket
+
+export async function addTicket(ticket: ticketObject){
+    let url = process.env.DATABASE_URL;
+    const sql = url ? neon(url) : neon('');
+    const response = await sql`INSERT INTO tickets (event_id, user_id, uuid, enabled) VALUES (${ticket.event_id}, ${ticket.user_id}, ${ticket.uuid}, true);`;
+    return ticket;
+}
+
+//function to get the tickets
+export async function getTickets(){
+    let url = process.env.DATABASE_URL;
+    const sql = url ? neon(url) : neon('');
+    const data = await sql`SELECT * FROM tickets;`;
+    return data;
+}
+
+//function to get the tickets by user
+export async function getTicketsByUser(id: number){
+    let url = process.env.DATABASE_URL;
+    const sql = url ? neon(url) : neon('');
+    const data = await sql`SELECT * FROM tickets WHERE user_id = ${id};`;
+    return data;
+}
+
+//function to get the tickets by event
+
+export async function getTicketsByEvent(id: number){
+    let url = process.env.DATABASE_URL;
+    const sql = url ? neon(url) : neon('');
+    const data = await sql`SELECT * FROM tickets WHERE event_id = ${id};`;
+    return data;
+}
+
+//function to get ticket by uuid
+
+export async function getTicketByUuid(uuid: string){
+    let url = process.env.DATABASE_URL;
+    const sql = url ? neon(url) : neon('');
+    const data = await sql`SELECT * FROM tickets WHERE uuid = ${uuid};`;
+    return data;
+}
+
+
+export async function disableTicket(ticket: ticketObject){
+    let url = process.env.DATABASE_URL;
+    const sql = url ? neon(url) : neon('');
+    const response = await sql`UPDATE tickets SET enabled = false WHERE uuid = ${ticket.uuid};`;
+    return ticket;
 }
