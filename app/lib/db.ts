@@ -96,9 +96,9 @@ export async function getTicketByUuid(uuid: string){
 }
 
 
-export async function disableTicket(ticket: ticketObject){
+export async function disableTicket(uuid: Pick<ticketObject, 'uuid'>){
     let url = process.env.DATABASE_URL;
     const sql = url ? neon(url) : neon('');
-    const response = await sql`UPDATE tickets SET enabled = false WHERE uuid = ${ticket.uuid};`;
-    return ticket;
+    const response = await sql`UPDATE tickets SET enabled = false WHERE uuid = ${uuid};`;
+    return uuid;
 }
