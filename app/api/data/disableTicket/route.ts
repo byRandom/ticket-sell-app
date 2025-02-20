@@ -16,8 +16,11 @@ export async function PATCH(req:Request){
         return Response.json({message:"Unauthorized"}, {status:401});
     }
 
+    //Extract ticket data from request
     let data = await req.json();
     let uuid = data.uuid as Extract<ticketObject, 'uuid'>;
+
+    //disable the ticket
     let response = await disableTicket(uuid);
 
     return Response.json(response, {status:200});

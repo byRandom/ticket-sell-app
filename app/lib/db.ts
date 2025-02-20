@@ -1,6 +1,6 @@
 import { neon } from "@neondatabase/serverless";
 import process from "process";
-import { Credentials, eventObject, ticketObject } from "./definitions";
+import { Credentials, eventObject, ticketObject, User } from "./definitions";
 export async function getData() {
     let url = process.env.DATABASE_URL;
     const sql = url ? neon(url) : neon('');
@@ -95,10 +95,26 @@ export async function getTicketByUuid(uuid: string){
     return data;
 }
 
-
+//function to disable a ticket
 export async function disableTicket(uuid: Extract<ticketObject, 'uuid'>){
     let url = process.env.DATABASE_URL;
     const sql = url ? neon(url) : neon('');
     const response = await sql`UPDATE tickets SET enabled = false WHERE uuid = ${uuid};`;
     return uuid;
+}
+
+//function to get the user data by id
+export async function saveCustomerData(id: number, stripe_id: string){
+    let url = process.env.DATABASE_URL;
+    const sql = url ? neon(url) : neon('');
+    const response = await sql`INSERT INTO customers (user_id, stripe_id) VALUES (${id}, ${stripe_id});`;
+    return response;
+}
+
+//function to check if the customer exists
+export async function checkCustomerExists(id: number){
+    let url = process.env.DATABASE_URL;
+    const sql = url ? neon(url) : neon('');
+    const data = await sql`SELECT * FROM customers WHERE user_id = ${id};`;
+    return data.length ? true : false;
 }
