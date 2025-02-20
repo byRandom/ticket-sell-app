@@ -21,6 +21,7 @@ export async function GET(req:NextRequest){
 
     let urlData = req.nextUrl.searchParams;
     let ticket = urlData.get("ticket");
+    let user = urlData.get("user_id");
 
     //Check if the ticket is valid
 
@@ -35,7 +36,10 @@ export async function GET(req:NextRequest){
 
     }
 
-    let data = await getTickets();
+    //Get tickets by user
 
-    return Response.json(data, {status:200});
+    if(user){
+        let data = await getTickets(parseInt(user));
+        return Response.json(data, {status:200});
+    }
 }

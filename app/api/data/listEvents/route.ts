@@ -8,14 +8,6 @@ export async function GET(){
     if(!dataResponse){
         return Response.json({message:"Invalid token"}, {status:401});
     }
-    //Check if the user is an admin
-
-    const isAdmin = await checkAdmin(dataResponse.id);
-    
-    if(!isAdmin){
-        return Response.json({message:"Unauthorized"}, {status:401});
-    }
-
     //get the events
     let events = await getEvents();
 
