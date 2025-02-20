@@ -1,6 +1,6 @@
 import { neon } from "@neondatabase/serverless";
 import process from "process";
-import { Credentials, eventObject, ticketObject } from "./definitions";
+import { Credentials, eventObject, ticketObject, User } from "./definitions";
 export async function getData() {
     let url = process.env.DATABASE_URL;
     const sql = url ? neon(url) : neon('');
@@ -25,8 +25,15 @@ export async function checkDuplicateEmail(email: string){
 export async function getUserData(email: string){
     let url = process.env.DATABASE_URL;
     const sql = url ? neon(url) : neon('');
-    const data = await sql`SELECT * FROM users WHERE email = ${email}`;
-    return data;
+    const data:any = await sql`SELECT * FROM users WHERE email = ${email}`;
+    const typedData:User = {
+        id: data.id,
+        email: data.email,
+        username: data.username,
+        password: data.password,
+        receive_promotions: data.receive_promotions
+    }
+    return typedData;
 }
 //function to check if the user is an admin
 export async function checkAdmin(id: number){

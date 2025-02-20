@@ -2,7 +2,8 @@
 
 import { verify } from "jsonwebtoken";
 import { cookies } from "next/headers";
-import { interfaceToken } from "./definitions";
+import { interfaceToken, User } from "./definitions";
+import * as jwt from "jsonwebtoken";
 
 export async function checkToken(){
     //Check if the user is logged in
@@ -23,4 +24,27 @@ export async function checkToken(){
         return false;
     }
     return dataResponse;
+}
+
+export const createSessionCookie = async (userDB:User) => {
+    const cookieStore = await cookies();
+    const tokenJSON:interfaceToken = {
+        id: userDB.id,
+        email: userDB.email,
+        username: userDB.username,
+        expiresIn: Date.now() + 1000 * 60 * 60 * 24 * 7
+    }
+    const secret:string = process.env.JWT_SECRET ? process.env.JWT_SECRET : '';
+    //Create the token and check if its in dev to set the secure flag
+    const token = jwt.sign(tokenJSON, secret, {expiresIn: "7d"});
+    const tokenString = JSON.stringify(token);
+    //Set the cookie
+    cookieStore.set("Token", tokenString, 
+    {
+        httpOnly:true,
+        sameSite:"strict",
+        secure: process.env.NODE_ENV === "production",
+        path:"/",
+        maxAge:60 * 60 * 24 * 7,
+    });
 }
