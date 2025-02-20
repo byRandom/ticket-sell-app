@@ -62,10 +62,10 @@ export async function addTicket(ticket: ticketObject){
 }
 
 //function to get the tickets
-export async function getTickets(){
+export async function getTickets(user_id: number){
     let url = process.env.DATABASE_URL;
     const sql = url ? neon(url) : neon('');
-    const data = await sql`SELECT * FROM tickets;`;
+    const data = await sql`SELECT * FROM tickets WHERE user_id = ${user_id};`;
     return data;
 }
 
@@ -96,7 +96,7 @@ export async function getTicketByUuid(uuid: string){
 }
 
 
-export async function disableTicket(uuid: Pick<ticketObject, 'uuid'>){
+export async function disableTicket(uuid: Extract<ticketObject, 'uuid'>){
     let url = process.env.DATABASE_URL;
     const sql = url ? neon(url) : neon('');
     const response = await sql`UPDATE tickets SET enabled = false WHERE uuid = ${uuid};`;

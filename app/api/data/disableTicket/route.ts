@@ -17,7 +17,7 @@ export async function PATCH(req:Request){
     }
 
     let data = await req.json();
-    let uuid = data.uuid as Pick<ticketObject, 'uuid'>;
+    let uuid = data.uuid as Extract<ticketObject, 'uuid'>;
     let response = await disableTicket(uuid);
 
     return Response.json(response, {status:200});
