@@ -27,7 +27,8 @@ export async function checkToken(){
 }
 
 export const createSessionCookie = async (userDB:User) => {
-    const cookieStore = await cookies();
+    
+    console.debug("Creating cookie...")
     const tokenJSON:interfaceToken = {
         id: userDB.id,
         email: userDB.email,
@@ -38,13 +39,14 @@ export const createSessionCookie = async (userDB:User) => {
     //Create the token and check if its in dev to set the secure flag
     const token = jwt.sign(tokenJSON, secret, {expiresIn: "7d"});
     const tokenString = JSON.stringify(token);
-    //Set the cookie
-    cookieStore.set("Token", tokenString, 
-    {
+    const cookieOptions:any = {
         httpOnly:true,
         sameSite:"strict",
         secure: process.env.NODE_ENV === "production",
         path:"/",
         maxAge:60 * 60 * 24 * 7,
-    });
+    }
+    //Set the cookie
+    
+    return {tokenString, cookieOptions}
 }
