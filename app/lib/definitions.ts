@@ -5,7 +5,7 @@ export interface User{
     id: number,
     email: string,
     username: string,
-    password: string
+    password: string,
     receive_promotions: boolean
 }
 
@@ -40,4 +40,23 @@ export interface ticketObject{
     user_id: number,
     uuid: string,
     enabled: boolean
+}
+
+
+export interface customerRelation{
+    user_id:number,
+    stripe_id: string
+}
+
+export interface customer{
+    name: string,
+    email: string,
+    address: {
+        line1: string,
+        city: string,
+        state: string,
+        postal_code: string,
+        country: string
+    },
+    prefered_locales: string[]
 }

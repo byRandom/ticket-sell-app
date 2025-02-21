@@ -8,19 +8,23 @@ export async function POST(req:Request){
     try{
         const data:Exclude<User, "id"> = await req.json();
         const cookieStore = await cookies();
-        checkCredentials(data)
+        const credentialStatus = checkCredentials(data)
+        if(credentialStatus !== true) return Response.json(credentialStatus)
         //////////////////////////////////////////
         await checkUserExists(data)
         //////////////////////////////////////////
         console.log(data.email)
         const userDB:User = await getUserData(data.email);
-        checkPassword(data, userDB)
+        const passwordStatus = await checkPassword(data, userDB)
+        if(passwordStatus !== true) return Response.json(passwordStatus)
         //////////////////////////////////////////
         const cookieData = await createSessionCookie(userDB)
         cookieStore.set("Token", cookieData.tokenString, cookieData.cookieOptions);
         //Return a success message
        return Response.json({message:"Logged in succesfully"} , {status:200})
     }catch(e){
+        console.error(e)
+    }finally{
         Response.json({message:"Internal server error"}, {status:500})
     }
     

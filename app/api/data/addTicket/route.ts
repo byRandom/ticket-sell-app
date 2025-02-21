@@ -10,7 +10,7 @@ export async function POST(req:Request){
     if(!dataResponse){
         return Response.json({message:"Invalid token"}, {status:401});
     }
-    //Check if the user is an admin
+    
     let data = await req.json();
     let ticket = data as ticketObject;
     let response = addTicket(ticket);
