@@ -13,7 +13,6 @@ export async function POST(req:Request){
         //////////////////////////////////////////
         await checkUserExists(data)
         //////////////////////////////////////////
-        console.log(data.email)
         const userDB:User = await getUserData(data.email);
         const passwordStatus = await checkPassword(data, userDB)
         if(passwordStatus !== true) return Response.json(passwordStatus)
