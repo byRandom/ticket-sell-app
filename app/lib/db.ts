@@ -1,6 +1,5 @@
 import { neon } from "@neondatabase/serverless";
-import process from "process";
-import { Credentials, customerRelation, eventObject, ticketObject, User } from "./definitions";
+import { Credentials, customerRelation, eventObject, ticketObject, User, product } from './definitions';
 export async function getData() {
     let url = process.env.DATABASE_URL;
     const sql = url ? neon(url) : neon('');
@@ -57,6 +56,14 @@ export async function getEvents(){
     const sql = url ? neon(url) : neon('');
     const data = await sql`SELECT * FROM events;`;
     return data;
+}
+
+//function to update product assigned to event by id
+export async function updateEventProduct(eventId: number, productId: product['id']){
+    let url = process.env.DATABASE_URL;
+    const sql = url ? neon(url) : neon('');
+    const event = await sql`UPDATE events SET product = ${productId} WHERE id = ${eventId};`;
+    return event;
 }
 
 //function to create a ticket
@@ -132,4 +139,20 @@ export async function getCustomerByUid(id:number){
     const sql = url ? neon(url) : neon('');
     const data = await sql`SELECT * FROM customers WHERE user_id = ${id};`;
     return data[0] as customerRelation
+}
+
+//save product data
+export async function saveProductData(product: product){
+    let url = process.env.DATABASE_URL;
+    const sql = url ? neon(url) : neon('');
+    const response = await sql`INSERT INTO products (id, active, name) VALUES (${product.id}, ${product.active}, ${product.name});`;
+    return response;
+}
+
+//Get product by name
+export async function getProductByName(name: string){
+    let url = process.env.DATABASE_URL;
+    const sql = url ? neon(url) : neon('');
+    const data = await sql`SELECT * FROM products WHERE name = ${name};`;
+    return data[0] as product;
 }

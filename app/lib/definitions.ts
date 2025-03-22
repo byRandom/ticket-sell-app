@@ -32,7 +32,8 @@ export interface eventObject{
     price: number,
     image: string,
     category: string,
-    tickets_sold: number
+    tickets_sold: number,
+    product: string
 }
 
 export interface ticketObject{
@@ -59,4 +60,15 @@ export interface customer{
         country: string
     },
     prefered_locales: string[]
+}
+
+export interface product{
+    id: string,
+    active: boolean,
+    name: string,
+}
+
+export interface productRequest{
+    name: string,
+    eventId: number,
 }

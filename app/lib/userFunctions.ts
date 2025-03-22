@@ -20,6 +20,7 @@ export const checkUserExists = async (user:Exclude<User, "id">) => {
     if(user["email"].length === 0){
         return ({message:"Invalid credentials", status:401})
     }
+    return true
 }
 
 export const checkPassword = async (user:Exclude<User, "id">, userDB:User ) => {
